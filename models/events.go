@@ -27,35 +27,45 @@ type Event struct {
 	Counter      string
 }
 
-// States is stroe the current status of a counter
-type States struct {
+// CounterStates is stroe the current status of a counter
+type CounterStatus struct {
 	ID         int
 	PK         string // md5(endpoint+metric+tags+strategy)
 	Endpoint   string
 	Metric     string
 	Tags       string
-	Strategy   string
-	Expression string
+	Strategy   int
+	Expression int
 	Status     string
+	StartTime  time.Time
+}
+
+type GroupAlarmClock struct {
+	LastAlarmTime time.Time
+
+	CounterStatus int
+	Group         int
 }
 
 // StateChangeHistory is histroy  of state changes
-type StateChangeHistory struct {
-	ID         int
-	PK         string
-	State      string
-	ChangeTime time.Time
+type CounterStatusHistory struct {
+	ID            int
+	CounterStatus int
+	State         string
+	StartTime     time.Time
+	EndTime       time.Time
 }
 
 // SendingRecord is store the AlarmContent and related users
-type SendingRecord struct {
+type AlarmReceiveRecord struct {
 	ID         int
 	State      string
 	SendMethod int
 	AlarmType  string //HOST, MODULE, CONVERGENCE
 	Content    AlarmContent
 	Users      User
-	Time       time.Time
+	SendTime   time.Time
+	ReadTime   time.Time
 }
 
 // AlarmContent used to store the content of a AlarmType
